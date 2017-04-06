@@ -8,14 +8,10 @@ nOuterLoop = 1;
 nInnerLoop = 5;
 load KMeans_5x5_32_Factor3 vec par param;
 
-
-
-
 fields = fieldnames(imdong);
 PSNR = zeros( length(fields), 1 );
 for i = 1 : length(fieldnames(imdong))
     te_HR = double(imdong.(fields{i}));
-    clear im imdong im_tr;
     [im_h, im_w, im_c] = size(te_HR);
     te_LR           =   te_HR(1 : par.nFactor : im_h, 1 : par.nFactor : im_w, :);
     imwrite(uint8(te_LR), ['Result/' fields{i} '_LR.png']);
