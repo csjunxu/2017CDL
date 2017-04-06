@@ -60,7 +60,7 @@ for alphay =  [1]
                 end
                 mIniPSNR = mean(IniPSNR);
                 mPSNR = mean(PSNR);
-                RCDL_RID_MAD = sprintf(['RCDL_RID_MAD1_' Par.IniType '_ax' num2str(alphax) '_ay' num2str(alphay) '_b' num2str(beta) '_gy' num2str(gammay) '_' datestr(now, 30) '.mat']);
+                RCDL_RID_MAD = sprintf(['C:\Users\csjunxu\Desktop\Projects\2017P1\RCDL_RID_MAD1_' Par.IniType '_ax' num2str(alphax) '_ay' num2str(alphay) '_b' num2str(beta) '_gy' num2str(gammay) '_' datestr(now, 30) '.mat']);
                 save(RCDL_RID_MAD,'RCDL', 'IniPSNR', 'mIniPSNR', 'PSNR', 'mPSNR');
             end
         end
