@@ -2,18 +2,6 @@ clear;clc;
 addpath('C:/Users/csjunxu/Desktop/JunXu/Paper/Image Super-Resolution/SCDL CVPR2012/SCDL/Data');
 addpath('Utilities');
 
-% Semi-Coupled Dictionary Learning for Super-Resolution
-% Author: Shenlong Wang,
-% Latest Update: 6, June 2012
-% This code is for the paper:
-
-% S. Wang, L. Zhang, Y. Liang and Q. Pan, "Semi-coupled Dictionary Learning
-% with Applications in Super-resolution and Photo-Sketch Synthesis", in CVPR 2012.
-
-% Contact: {csslwang, cslzhang}@comp.polyu.edu.hk
-
-
-
 load NaturalSR;
 cls_num = 32;
 nOuterLoop = 1;
