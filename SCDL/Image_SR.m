@@ -31,10 +31,10 @@ for i = 1 : length(fieldnames(imdong))
         PSNR(i) = csnr(im_hout, te_HR, 5, 5);
         fprintf('\nPSNR of Semi-Coupled DL: %2.2f \n', PSNR(i));
     end
-    imwrite(uint8(im_hout), ['Result/' fields{i} '_ScDL_X' num2str(par.nFactor) '.png']);
+    imwrite(uint8(im_hout), ['Result/' fields{i} '_ScDL_X' num2str(par.nFactor) '_NLM.png']);
 end
 mPSNR=mean(PSNR);
 fprintf('The average PSNR = %2.4f. \n', mPSNR);
-name = sprintf(['SCDL_X' num2str(par.nFactor) '.mat']);
+name = sprintf(['SCDL_X' num2str(par.nFactor) '_NLM.mat']);
 save(name,'PSNR','mPSNR');
 

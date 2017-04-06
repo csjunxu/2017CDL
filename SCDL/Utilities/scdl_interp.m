@@ -93,16 +93,15 @@ for t = 1 : nInnerLoop
     [im_out, ~] = patch2data([XH+meanX;XL+meanX], im_h, im_w, 1,par.win, par.step);
     im_out(1 : nFactor : im_h, 1 : nFactor : im_w) = te_LR;
     
+    [N, ~]       =   Compute_NLM_Matrix( im_out , 5, par);
+    NTN          =   N'*N*0.05;
     
-%     [N, ~]       =   Compute_NLM_Matrix( im_out , 5, par);
-%     NTN          =   N'*N*0.05;
-%     
-%     im_f = sparse(double(im_out(:)));
-%     for i = 1 : fix(60 / t.^2)      
-%         im_f = im_f  - NTN*im_f;
-%     end
-%     im_out = reshape(full(im_f), im_h, im_w);
-%    
+    im_f = sparse(double(im_out(:)));
+    for i = 1 : fix(60 / t.^2)      
+        im_f = im_f  - NTN*im_f;
+    end
+    im_out = reshape(full(im_f), im_h, im_w);
+   
 end
 end
 tOut(:,:,1) = uint8(im_out);
