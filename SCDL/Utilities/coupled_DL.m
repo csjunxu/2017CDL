@@ -28,30 +28,37 @@ for t = 1 : nIter
     Alphas = mexLasso([Xs;sqrtmu * full(Alphap)], [Ds; sqrtmu * Ws],param);
     Alphap = mexLasso([Xp;sqrtmu * full(Alphas)], [Dp; sqrtmu * Wp],param);
     dictSize = par.K;
+    
     % Update D
     for i=1:dictSize
-       ai        =    Alphas(i,:);
-       Y         =    Xs-Ds*Alphas+Ds(:,i)*ai;
-       di        =    Y*ai';
-       di        =    di./(norm(di,2) + eps);
-       Ds(:,i)    =    di;
+        ai        =    Alphas(i,:);
+        Y         =    Xs-Ds*Alphas+Ds(:,i)*ai;
+        di        =    Y*ai';
+        di        =    di./(norm(di,2) + eps);
+        Ds(:,i)    =    di;
     end
     for i=1:dictSize
-       ai        =    Alphap(i,:);
-       Y         =    Xp-Dp*Alphap+Dp(:,i)*ai;
-       di        =    Y*ai';
-       di        =    di./(norm(di,2) + eps);
-       Dp(:,i)    =    di;
+        ai        =    Alphap(i,:);
+        Y         =    Xp-Dp*Alphap+Dp(:,i)*ai;
+        di        =    Y*ai';
+        di        =    di./(norm(di,2) + eps);
+        Dp(:,i)    =    di;
     end
+    
     % Update W
-%     Ws = Alphap * Alphas' * inv(Alphas * Alphas' + par.nu * eye(size(Alphas, 1))) ;
-%     Wp = Alphas * Alphap' * inv(Alphap * Alphap' + par.nu * eye(size(Alphap, 1))) ;    
-    Ws = (1 - rho) * Ws  + rho * Alphap * Alphas' * inv(Alphas * Alphas' + par.nu * eye(size(Alphas, 1))) ;
-    Wp = (1 - rho) * Wp  + rho * Alphas * Alphap' * inv(Alphap * Alphap' + par.nu * eye(size(Alphap, 1))) ;
+    %     Ws = Alphap * Alphas' * inv(Alphas * Alphas' + par.nu * eye(size(Alphas, 1))) ;
+    %     Wp = Alphas * Alphap' * inv(Alphap * Alphap' + par.nu * eye(size(Alphap, 1))) ;
+    %     Ws = (1 - rho) * Ws  + rho * Alphap * Alphas' * inv(Alphas * Alphas' + par.nu * eye(size(Alphas, 1))) ;
+    %     Wp = (1 - rho) * Wp  + rho * Alphas * Alphap' * inv(Alphap * Alphap' + par.nu * eye(size(Alphap, 1))) ;
+    [U, ~, V] = svd(Alphas * Alphap', 'econ');
+    Ws = V * U';
+    Wp = Ws';
+    
+    
     % Alpha = pinv(D' * D + lambda2 * eye(numD)) * D' * X;
     P1 = Xp - Dp * Alphap;
     P1 = P1(:)'*P1(:) / 2;
-    P2 = lambda1 *  norm(Alphap, 1);    
+    P2 = lambda1 *  norm(Alphap, 1);
     P3 = Alphas - Wp * Alphap;
     P3 = P3(:)'*P3(:) / 2;
     P4 = nu * norm(Wp, 'fro');
@@ -59,10 +66,10 @@ for t = 1 : nIter
     
     P1 = Xs - Ds * Alphas;
     P1 = P1(:)'*P1(:) / 2;
-    P2 = lambda1 *  norm(Alphas, 1);    
+    P2 = lambda1 *  norm(Alphas, 1);
     P3 = Alphap - Ws * Alphas;
     P3 = P3(:)'*P3(:) / 2;
-    P4 = nu * norm(Ws, 'fro'); 
+    P4 = nu * norm(Ws, 'fro');
     fs = 1 / 2 * P1 + P2 + mu * (P3 + P4);
     f = fp + fs;
     if (abs(f_prev - f) / f < epsilon)
@@ -72,4 +79,3 @@ for t = 1 : nIter
     save tempDict_SR_NL Ds Dp Ws Wp par param i;
     % fprintf('Iter: %d, E1 : %d, E2 : %d, E : %d\n', t, mu * (P1 + P2), (1 - mu) * (P3 + P4), E);
 end
-    
