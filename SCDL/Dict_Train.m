@@ -38,7 +38,7 @@ for i = 1 : cls_num
     fprintf('Semi-Coupled dictionary learning: Cluster: %d\n', i);
     D = mexTrainDL([XH_t;XL_t], param);
     Dini{i} = D;
-    save Data/Dict_SR_Initial Dini;
+    save Dict_SR_Initial Dini;
 end
 
 % Semi-Coupled Dictionary Learning
@@ -49,7 +49,7 @@ for i = 1 : cls_num
     clear Xh Xl;
     XH_t = XH_t - repmat(mean(XH_t), [par.win^2 1]);
     XL_t = XL_t - repmat(mean(XL_t), [par.win^2 1]);
-    load Data/Dict_SR_Initial Dini;
+    load Dict_SR_Initial Dini;
     D = Dini{i};
     clear Dini;
     Dh = D(1:par.win * par.win,:);
