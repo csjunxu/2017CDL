@@ -50,7 +50,7 @@ for t = 1 : nIter
     %     Wp = Alphas * Alphap' * inv(Alphap * Alphap' + par.nu * eye(size(Alphap, 1))) ;
     %     Ws = (1 - rho) * Ws  + rho * Alphap * Alphas' * inv(Alphas * Alphas' + par.nu * eye(size(Alphas, 1))) ;
     %     Wp = (1 - rho) * Wp  + rho * Alphas * Alphap' * inv(Alphap * Alphap' + par.nu * eye(size(Alphap, 1))) ;
-    [U, ~, V] = svd(Alphas * Alphap', 'econ');
+    [U, ~, V] = svd(full(Alphas) * full(Alphap)', 'econ');
     Ws = V * U';
     Wp = Ws';
     

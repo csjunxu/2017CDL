@@ -30,16 +30,18 @@ load KMeans_5x5_32_Factor3;
 
 
 Dini = [];
-for i = 1 : cls_num
-    XH_t = double(Xh{i});
-    XL_t = double(Xl{i});
-    XH_t = XH_t - repmat(mean(XH_t), [par.win^2 1]);
-    XL_t = XL_t - repmat(mean(XL_t), [par.win^2 1]);
-    fprintf('Semi-Coupled dictionary learning: Cluster: %d\n', i);
-    D = mexTrainDL([XH_t;XL_t], param);
-    Dini{i} = D;
-    save Dict_SR_Initial Dini;
-end
+% for i = 1 : cls_num
+%     XH_t = double(Xh{i});
+%     XL_t = double(Xl{i});
+%     XH_t = XH_t - repmat(mean(XH_t), [par.win^2 1]);
+%     XL_t = XL_t - repmat(mean(XL_t), [par.win^2 1]);
+%     fprintf('Semi-Coupled dictionary learning: Cluster: %d\n', i);
+%     D = mexTrainDL([XH_t;XL_t], param);
+%     Dini{i} = D;
+%     save Dict_SR_Initial Dini;
+% end
+
+load Dict_SR_Initial.mat Dini;
 
 % Semi-Coupled Dictionary Learning
 for i = 1 : cls_num
