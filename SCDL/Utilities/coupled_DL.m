@@ -64,7 +64,7 @@ for t = 1 : nIter
     P4 = nu * norm(Wp, 'fro');
     fp = 1 / 2 * P1 + P2 + mu * (P3 + P4);
     
-    P1 = Xs - Ds * Alphas;
+    P1 = Xs - Ds * Alphas;  
     P1 = P1(:)'*P1(:) / 2;
     P2 = lambda1 *  norm(Alphas, 1);
     P3 = Alphap - Ws * Alphas;
